@@ -1,12 +1,38 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import {createStore} from 'redux'
+const button = document.querySelector(".btn");
+const minus = document.querySelector(".minus");
+const number = document.getElementById("number");
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const reducer = (state = 0,action) => {
+  switch(action.type){
+    case "ADD":
+      return state + 1;
+    case "MINUS":
+      return state - 1;
+      default:
+        return state;
+      }
+    }
+const store = createStore(reducer);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const count = () => {
+  number.innerText = store.getState();
+}
+
+store.subscribe(count);
+const actionAdd = () => {
+  return {type : "ADD"};
+}
+const actionMinus = () => {
+  return {type:"MINUS"};
+}
+
+const handlePlusClick = () => {
+  store.dispatch(actionAdd());
+}
+const handleMinusClick = () => {
+  store.dispatch(actionMinus());
+}
+
+button.addEventListener('click',handlePlusClick);
+minus.addEventListener('click', handleMinusClick);
