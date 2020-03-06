@@ -16,10 +16,16 @@ const reducer = (state = 0,action) => {
 const store = createStore(reducer);
 
 const count = () => {
+  console.log('i`m the first subscriber!')
   number.innerText = store.getState();
 }
 
+const count2 = () => {
+  console.log("i`m also subscribe")
+}
+
 store.subscribe(count);
+store.subscribe(count2);
 const actionAdd = () => {
   return {type : "ADD"};
 }
